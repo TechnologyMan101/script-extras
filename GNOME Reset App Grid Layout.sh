@@ -8,6 +8,7 @@ mainmenu () {
 	echo "====================================="
 	tput setaf 9
 	echo "This should only be used on GNOME 3.38 and above!!!"
+	echo "If you are using this script on Wayland, please make sure to save your work as all applications are closed when GNOME is restarted!!! Xorg users are not affected by this."
 	tput setaf 3
 	echo "Hit <return> to run this script."
 	tput setaf 9
