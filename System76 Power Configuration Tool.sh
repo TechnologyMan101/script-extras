@@ -60,6 +60,16 @@ badoption3 () {
 	sleep 3
 	graphicsmenu
 }
+failed () {
+	clear
+	tput setaf 9
+	echo "Failed..."
+	tput setaf 3
+	echo "Returning to Main Menu..."
+	tput sgr0
+	sleep 3
+	mainmenu
+}
 performancemenu () {
 	clear
 	tput setaf 3
@@ -87,7 +97,7 @@ performancemenu () {
 }
 checkperformance () {
 	clear
-	system76-power profile
+	system76-power profile || failed
 	tput setaf 3
 	echo "Press <return> to return to Performance Profile Settings."
 	read answer
@@ -95,19 +105,19 @@ checkperformance () {
 }
 setbattery () {
 	clear
-	system76-power profile battery
+	system76-power profile battery || failed
 	tput setaf 3
 	finishperformance
 }
 setbalanced () {
 	clear
-	system76-power profile balanced
+	system76-power profile balanced || failed
 	tput setaf 3
 	finishperformance
 }
 setperformance () {
 	clear
-	system76-power profile performance
+	system76-power profile performance || failed
 	tput setaf 3
 	finishperformance
 }
@@ -154,7 +164,7 @@ graphicsmenu () {
 }
 checkgraphics () {
 	clear
-	system76-power graphics
+	system76-power graphics || failed
 	tput setaf 3
 	echo "Press <return> to return to Graphics Profile Settings."
 	read answer
@@ -162,22 +172,22 @@ checkgraphics () {
 }
 setintegrated () {
 	clear
-	system76-power graphics integrated
+	system76-power graphics integrated || failed
 	finishgraphics
 }
 setcompute () {
 	clear
-	system76-power graphics compute
+	system76-power graphics compute || failed
 	finishgraphics
 }
 sethybrid () {
 	clear
-	system76-power graphics hybrid
+	system76-power graphics hybrid || failed
 	finishgraphics
 }
 setnvidia () {
 	clear
-	system76-power graphics nvidia
+	system76-power graphics nvidia || failed
 	finishgraphics
 }
 finishgraphics () {
