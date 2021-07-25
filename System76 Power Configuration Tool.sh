@@ -1,11 +1,40 @@
 #!/bin/bash
 # Start of Function Cluster
+checkcompatibility () {
+	isinstalled="false"
+	if ! type system76-power &>/dev/null
+	then
+		sysreqfail
+	fi
+	isinstalled="true"
+	nvidiastatus="false"
+	if lspci | grep -qi "nvidia"
+	then
+		nvidiastatus="true"
+	elif lsusb | grep -qi "nvidia"
+	then
+		nvidiastatus="true"
+	fi
+}
+sysreqfail () {
+	clear
+	tput setaf 9
+	echo "We have detected that System76 Power is not installed on your computer. Please install System76 Power to use this configuration tool."
+	tput sgr0
+	echo "Hit any key to exit:"
+	IFS=""
+	read -sN1 answer
+	quitscript
+}
 mainmenu () {
 	clear
 	tput setaf 3
 	echo "==========================================="
 	echo " --- System76 Power Configuration Tool ---"
 	echo "==========================================="
+	tput setaf 10
+	echo "System76 Power Installed: $isinstalled"
+	tput setaf 3
 	echo "This script was made for non-GNOME desktops as there is no System76 Power extension for DEs other than GNOME. This script can still be used on all DEs and systems."
 	tput setaf 9
 	echo "You MUST have system76-power installed to use this script!!!"
@@ -15,15 +44,15 @@ mainmenu () {
 	tput setaf 9
 	echo "Press Q to quit." 
 	tput sgr0
-	echo "Enter your selection followed by <return>:"
-	read answer
-	case "$answer" in
-		1) performancemenu;;
-		2) graphicsmenu;;
-		q) quitscript;;
-		Q) quitscript;;
+	echo "Enter your selection:"
+	IFS=""
+	read -sN1 answer
+	case $(echo "$answer" | tr A-Z a-z) in
+		1)	performancemenu;;
+		2)	graphicsmenu;;
+		q)	quitscript;;
+		*)	badoption;;
 	esac
-	badoption
 }
 quitscript () {
 	tput sgr0
@@ -83,24 +112,25 @@ performancemenu () {
 	tput setaf 9
 	echo "Press Q to return to main menu." 
 	tput sgr0
-	echo "Enter your selection followed by <return>:"
-	read answer
-	case "$answer" in
-		1) checkperformance;;
-		2) setbattery;;
-		3) setbalanced;;
-		4) setperformance;;
-		q) mainmenu;;
-		Q) mainmenu;;
+	echo "Enter your selection:"
+	IFS=""
+	read -sN1 answer
+	case $(echo "$answer" | tr A-Z a-z) in
+		1)	checkperformance;;
+		2)	setbattery;;
+		3)	setbalanced;;
+		4)	setperformance;;
+		q)	mainmenu;;
+		*)	badoption2;;
 	esac
-	badoption2
 }
 checkperformance () {
 	clear
 	system76-power profile || failed
 	tput setaf 3
-	echo "Press <return> to return to Performance Profile Settings."
-	read answer
+	echo "Press any key to return to Performance Profile Settings."
+	IFS=""
+	read -sN1 answer
 	performancemenu
 }
 setbattery () {
@@ -137,6 +167,8 @@ graphicsmenu () {
 	echo "==================================="
 	echo " --- Graphics Profile Settings ---"
 	echo "==================================="
+	tput setaf 10
+	echo "NVIDIA Hardware Detected: $nvidiastatus"
 	tput setaf 9
 	echo "This script will not work if you DO NOT have NVIDIA Optimus/Switchable Graphics!"
 	echo "The only option that will work regardless is checking the current profile."
@@ -149,25 +181,26 @@ graphicsmenu () {
 	tput setaf 9
 	echo "Press Q to return to main menu." 
 	tput sgr0
-	echo "Enter your selection followed by <return>:"
-	read answer
-	case "$answer" in
-		1) checkgraphics;;
-		2) setintegrated;;
-		3) setcompute;;
-		4) sethybrid;;
-		5) setnvidia;;
-		q) mainmenu;;
-		Q) mainmenu;;
+	echo "Enter your selection:"
+	IFS=""
+	read -sN1 answer
+	case $(echo "$answer" | tr A-Z a-z) in
+		1)	checkgraphics;;
+		2)	setintegrated;;
+		3)	setcompute;;
+		4)	sethybrid;;
+		5)	setnvidia;;
+		q)	mainmenu;;
+		*)	badoption3;;
 	esac
-	badoption3
 }
 checkgraphics () {
 	clear
 	system76-power graphics || failed
 	tput setaf 3
-	echo "Press <return> to return to Graphics Profile Settings."
-	read answer
+	echo "Press any key to return to Graphics Profile Settings."
+	IFS=""
+	read -sN1 answer
 	graphicsmenu
 }
 setintegrated () {
@@ -204,6 +237,7 @@ finishgraphics () {
 # Start of Main Script
 while true
 do
+	checkcompatibility
 	mainmenu
 done
 # End of Main Script
