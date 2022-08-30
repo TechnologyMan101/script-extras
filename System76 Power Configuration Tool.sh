@@ -224,7 +224,7 @@ finishgraphics () {
 	graphicsmenu
 }
 runcheck () {
-	IFS=" "
+	IFS=$'\n'
 	command="$*"
 	retval=1
 	attempt=1

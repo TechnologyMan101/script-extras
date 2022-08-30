@@ -84,7 +84,7 @@ runscript () {
 	finish
 }
 runcheck () {
-	IFS=" "
+	IFS=$'\n'
 	command="$*"
 	retval=1
 	attempt=1
@@ -107,7 +107,7 @@ runcheck () {
 	if [[ $retval -ne 0 ]] && [[ $attempt -gt 5 ]]; then
 		clear
 		tput setaf 9
-		echo "Oops! A fatal error has occured and the program cannot continue. Returning to the main menu in 10 seconds..."
+		echo "Oops! A fatal error has occurred and the program cannot continue. Returning to the main menu in 10 seconds..."
 		tput setaf 3
 		echo "Please try again later or if the problem persists, create an issue on GitHub."
 		tput sgr0
