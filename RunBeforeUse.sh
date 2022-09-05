@@ -1,5 +1,10 @@
 #!/bin/bash
+clear
 # Start of Function Cluster
+tput setaf 3
+echo "Initializing functions..."
+sleep 1.5
+tput setaf 10
 displayfunction () {
 	clear
 	tput setaf 3
@@ -8,10 +13,12 @@ displayfunction () {
 	sleep 3
 	makeallexecutable
 }
+echo "Loaded displayfunction."
 makeallexecutable () {
 	runcheck find $(dirname "$0") -type f -iname "*.sh" -print0 | xargs -0 chmod +x
 	finish
 }
+echo "Loaded makeallexecutable."
 finish () {
 	clear
 	tput setaf 10
@@ -23,11 +30,13 @@ finish () {
 	clear
 	quitscript
 }
+echo "Loaded finish."
 quitscript () {
 	tput sgr0
 	clear
 	exit
 }
+echo "Loaded quitscript."
 runcheck () {
 	IFS=$'\n'
 	command="$*"
@@ -58,10 +67,15 @@ runcheck () {
 		tput sgr0
 		sleep 10
 		clear
-		mainmenu
+		quitscript
 	fi
 	IFS=""
 }
+echo "Loaded runcheck."
+tput setaf 3
+echo "Continuing..."
+tput sgr0
+sleep 1.5
 # End of Function Cluster
 # Start of Main Script
 while true

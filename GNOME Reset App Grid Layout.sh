@@ -1,5 +1,10 @@
 #!/bin/bash
+clear
 # Start of Function Cluster
+tput setaf 3
+echo "Initializing functions..."
+sleep 1.5
+tput setaf 10
 checkcompatibility () {
 	# Set isgnome variable
 	isgnome=false
@@ -15,6 +20,7 @@ checkcompatibility () {
 		sysreqfail
 	fi
 }
+echo "Loaded checkcompatibility."
 sysreqfail () {
 	clear
 	tput setaf 9
@@ -33,6 +39,7 @@ sysreqfail () {
 	read -sN1 answer
 	quitscript
 }
+echo "Loaded sysreqfail."
 mainmenu () {
 	clear
 	tput setaf 3
@@ -68,11 +75,13 @@ mainmenu () {
 		*)	badoption;;
 	esac
 }
+echo "Loaded mainmenu."
 quitscript () {
 	tput sgr0
 	clear
 	exit
 }
+echo "Loaded quitscript."
 badoption () {
 	clear
 	tput setaf 9
@@ -83,6 +92,7 @@ badoption () {
 	sleep 3
 	mainmenu
 }
+echo "Loaded badoption."
 finish () {
 	clear
 	tput setaf 10
@@ -94,6 +104,7 @@ finish () {
 	clear
 	quitscript
 }
+echo "Loaded finish."
 waylandwarning () {
 	clear
 	tput setaf 3
@@ -108,6 +119,7 @@ waylandwarning () {
 	IFS=""
 	read -sN1 answer
 }
+echo "Loaded waylandwarning."
 runscript () {
 	clear
 	tput setaf 3
@@ -125,6 +137,7 @@ runscript () {
 	fi
 	finish
 }
+echo "Loaded runscript."
 runcheck () {
 	IFS=$'\n'
 	command="$*"
@@ -159,6 +172,11 @@ runcheck () {
 	fi
 	IFS=""
 }
+echo "Loaded runcheck."
+tput setaf 3
+echo "Continuing..."
+tput sgr0
+sleep 1.5
 # End of Function Cluster
 # Start of Main Script
 while true

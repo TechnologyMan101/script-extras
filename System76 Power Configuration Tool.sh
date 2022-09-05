@@ -1,5 +1,10 @@
 #!/bin/bash
+clear
 # Start of Function Cluster
+tput setaf 3
+echo "Initializing functions..."
+sleep 1.5
+tput setaf 10
 checkcompatibility () {
 	isinstalled="false"
 	if ! type system76-power &>/dev/null
@@ -16,6 +21,7 @@ checkcompatibility () {
 		nvidiastatus="true"
 	fi
 }
+echo "Loaded checkcompatibility."
 sysreqfail () {
 	clear
 	tput setaf 9
@@ -26,6 +32,7 @@ sysreqfail () {
 	read -sN1 answer
 	quitscript
 }
+echo "Loaded sysreqfail."
 mainmenu () {
 	clear
 	tput setaf 3
@@ -54,11 +61,13 @@ mainmenu () {
 		*)	badoption;;
 	esac
 }
+echo "Loaded mainmenu."
 quitscript () {
 	tput sgr0
 	clear
 	exit
 }
+echo "Loaded quitscript."
 badoption () {
 	clear
 	tput setaf 9
@@ -69,6 +78,7 @@ badoption () {
 	sleep 3
 	mainmenu
 }
+echo "Loaded badoption."
 badoption2 () {
 	clear
 	tput setaf 9
@@ -79,6 +89,7 @@ badoption2 () {
 	sleep 3
 	performancemenu
 }
+echo "Loaded badoption2."
 badoption3 () {
 	clear
 	tput setaf 9
@@ -89,6 +100,7 @@ badoption3 () {
 	sleep 3
 	graphicsmenu
 }
+echo "Loaded badoption3."
 performancemenu () {
 	clear
 	tput setaf 3
@@ -114,6 +126,7 @@ performancemenu () {
 		*)	badoption2;;
 	esac
 }
+echo "Loaded performancemenu."
 checkperformance () {
 	clear
 	runcheck system76-power profile
@@ -123,24 +136,28 @@ checkperformance () {
 	read -sN1 answer
 	performancemenu
 }
+echo "Loaded checkperformance."
 setbattery () {
 	clear
 	runcheck system76-power profile battery
 	tput setaf 3
 	finishperformance
 }
+echo "Loaded setbattery."
 setbalanced () {
 	clear
 	runcheck system76-power profile balanced
 	tput setaf 3
 	finishperformance
 }
+echo "Loaded setbalanced."
 setperformance () {
 	clear
 	runcheck system76-power profile performance
 	tput setaf 3
 	finishperformance
 }
+echo "Loaded setperformance."
 finishperformance () {
 	clear
 	tput setaf 10
@@ -151,6 +168,7 @@ finishperformance () {
 	sleep 3
 	performancemenu
 }
+echo "Loaded finishperformance."
 graphicsmenu () {
 	clear
 	tput setaf 3
@@ -184,6 +202,7 @@ graphicsmenu () {
 		*)	badoption3;;
 	esac
 }
+echo "Loaded graphicsmenu."
 checkgraphics () {
 	clear
 	runcheck system76-power graphics
@@ -193,26 +212,31 @@ checkgraphics () {
 	read -sN1 answer
 	graphicsmenu
 }
+echo "Loaded checkgraphics."
 setintegrated () {
 	clear
 	runcheck system76-power graphics integrated
 	finishgraphics
 }
+echo "Loaded setintegrated."
 setcompute () {
 	clear
 	runcheck system76-power graphics compute
 	finishgraphics
 }
+echo "Loaded setcompute."
 sethybrid () {
 	clear
 	runcheck system76-power graphics hybrid
 	finishgraphics
 }
+echo "Loaded sethybrid."
 setnvidia () {
 	clear
 	runcheck system76-power graphics nvidia
 	finishgraphics
 }
+echo "Loaded setnvidia."
 finishgraphics () {
 	clear
 	tput setaf 10
@@ -223,6 +247,7 @@ finishgraphics () {
 	sleep 3
 	graphicsmenu
 }
+echo "Loaded finishgraphics."
 runcheck () {
 	IFS=$'\n'
 	command="$*"
@@ -258,6 +283,11 @@ runcheck () {
 	fi
 	IFS=""
 }
+echo "Loaded runcheck."
+tput setaf 3
+echo "Continuing..."
+tput sgr0
+sleep 1.5
 # End of Function Cluster
 # Start of Main Script
 while true
