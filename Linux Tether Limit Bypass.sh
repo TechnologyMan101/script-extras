@@ -10,6 +10,7 @@ checkcompatibility () {
 	islinux=false
 	issudo=false
 	isiptables=false
+	ischromiumos=false
 	
 	# Check for Linux
 	if ! uname -a | grep -qi "Linux"
@@ -31,19 +32,27 @@ checkcompatibility () {
 		sysreqfail
 	fi
 	isiptables=true
+	
+	# Check for Chrome OS/Chromium OS
+	if grep -qi "chromiumos" /etc/os-release
+	then
+		ischromiumos=true
+		sysreqfail
+	fi
 }
 echo "Loaded checkcompatibility."
 sysreqfail () {
 	clear
 	tput setaf 9
-	echo "System requirements not met. This script supports Linux systems with sudo and iptables!!!"
+	echo "System requirements not met. This script supports Linux systems with sudo and iptables!!! However, Chromium OS in developer mode is unsupported because iptables is missing features."
 	tput setaf 10
 	echo "Is Linux: $islinux"
 	if echo $islinux | grep -qi "true"
 	then
 		echo "sudo accessible: $issudo"
 		echo "iptables accessible: $isiptables"
-			tput setaf 6
+		echo "Chromium OS-based: $ischromiumos"
+		tput setaf 6
 		echo "Note that certain Linux systems, such as Debian, do not expose iptables unless running as root or using sudo. If you are sure that your system has iptables accessible, please disable the compatibility checker by adding # before the checkcompatibility command at the end of the file."
 	fi
 	tput sgr0
@@ -64,6 +73,7 @@ mainmenu () {
 	echo "Is Linux: $islinux"
 	echo "sudo accessible: $issudo"
 	echo "iptables accessible: $isiptables"
+	echo "Chromium OS-based: $ischromiumos"
 	tput setaf 6
 	echo "Please note that the bypass will only stay applied until the system is rebooted. To use the bypass again, simply run the script again. In addition, this bypass is valid for tethering from both Android and iOS, and does not need a VPN to make the bypass work."
 	echo "For use on routers, it is recommended to take the 4 commands used in the bypass (noted with comments) and paste them into custom iptables firewall rules in the router web interface. Make sure to remove the beginning runcheck and sudo! If your router does not have the applicable web interface for rules, make sure to insert the commands in a file that the router uses for startup commands."
