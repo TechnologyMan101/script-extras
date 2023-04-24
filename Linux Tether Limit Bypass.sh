@@ -44,7 +44,7 @@ echo "Loaded checkcompatibility."
 sysreqfail () {
 	clear
 	tput setaf 9
-	echo "System requirements not met. This script supports Linux systems with sudo and iptables!!! However, Chromium OS in developer mode is unsupported because iptables is missing features."
+	echo "System requirements not met. This script supports Linux systems with sudo and iptables!!! Additionally, not all ChromiumOS-based systems in developer mode will have iptables with the required features. However, it has been verified that iptables is fully working on ChromeOS using the Brunch Framework."
 	tput setaf 10
 	echo "Is Linux: $islinux"
 	if echo $islinux | grep -qi "true"
@@ -53,13 +53,17 @@ sysreqfail () {
 		echo "iptables accessible: $isiptables"
 		echo "Chromium OS-based: $ischromiumos"
 		tput setaf 6
-		echo "Note that certain Linux systems, such as Debian, do not expose iptables unless running as root or using sudo. If you are sure that your system has iptables accessible, please disable the compatibility checker by adding # before the checkcompatibility command at the end of the file."
+		echo "Note that certain Linux systems, such as Debian and ChromiumOS in developer mode, do not expose iptables unless running as root or using sudo. If you are sure that your system has iptables accessible, press <return> to bypass this prompt."
+		echo "If you are running a ChromiumOS-based system and you are sure that iptables has the correct features, press <return> to bypass this prompt."
 	fi
 	tput sgr0
-	echo "Hit any key to exit:"
+	echo "Hit any key to exit or press <return> to bypass this prompt:"
 	IFS=""
 	read -sN1 answer
-	quitscript
+	case $(echo "$answer" | tr A-Z a-z) in
+		"")	mainmenu;;
+		*)	quitscript;;
+	esac
 }
 echo "Loaded sysreqfail."
 mainmenu () {
@@ -176,7 +180,12 @@ runcheck () {
 	if [[ $retval -ne 0 ]] && [[ $attempt -gt 5 ]]; then
 		clear
 		tput setaf 9
-		echo "Oops! A fatal error has occurred and the program cannot continue. Returning to the main menu in 10 seconds..."
+		echo "Oops! A fatal error has occurred and the program case $(echo "$answer" | tr A-Z a-z) in
+		1)	applybypass;;
+		2)	flushtables;;
+		q)	quitscript;;
+		*)	badoption;;
+	esaccannot continue. Returning to the main menu in 10 seconds..."
 		tput setaf 3
 		echo "Please try again later or if the problem persists, create an issue on GitHub."
 		tput sgr0
