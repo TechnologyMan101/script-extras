@@ -136,9 +136,7 @@ applybypass () {
 	clear
 	tput sgr0
 	runcheck sudo iptables -t mangle -I POSTROUTING -j TTL --ttl-set 65
-	runcheck sudo iptables -t mangle -I PREROUTING -j TTL --ttl-set 65
 	runcheck sudo ip6tables -t mangle -I POSTROUTING ! -p icmpv6 -j HL --hl-set 65
-	runcheck sudo ip6tables -t mangle -I PREROUTING ! -p icmpv6 -j HL --hl-set 65
 	sleep 3
 	finish
 }
@@ -180,12 +178,7 @@ runcheck () {
 	if [[ $retval -ne 0 ]] && [[ $attempt -gt 5 ]]; then
 		clear
 		tput setaf 9
-		echo "Oops! A fatal error has occurred and the program case $(echo "$answer" | tr A-Z a-z) in
-		1)	applybypass;;
-		2)	flushtables;;
-		q)	quitscript;;
-		*)	badoption;;
-	esaccannot continue. Returning to the main menu in 10 seconds..."
+		echo "Oops! A fatal error has occurred and the program cannot continue. Returning to the main menu in 10 seconds..."
 		tput setaf 3
 		echo "Please try again later or if the problem persists, create an issue on GitHub."
 		tput sgr0
